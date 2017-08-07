@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="eng">
+	<head>
+		<title>
+			mysite1/polls
+		</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width-device-width, initial-scale=1"> 
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	</head>
+	<body>
+	<br>
+	<div class="container-fluid">
+		<div class="well">
+			<i><b>{{ question.question_text }}</b></i>
+		</div>
+		<div>
+		{% if error_message %}
+			<p><i>{{ error_message }}</i></p>
+		{% else %}
+			<form action="{% url 'polls:vote' question.id %}" method="post">
+			{% csrf_token %}
+				<table class="table table-striped">
+					<!--thead>
+						<tr>
+						<th> Name </th>
+						<th> Roll No </th>
+						<th> College </th>
+						</tr>
+					</thead-->
+					<tbody>
+					{% for i in question.choice_set.all %}
+						<tr>
+						<td>
+									<input type="radio" name = "choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+									<label for="choice{{ forloop.counter }}">{{ i.choice_text }}</label><br />
+						</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+				<br>
+			<input type="submit" value="Vote" />
+			</form>
+		{% endif %}
+		</div>
+	</div>
+	</body>
+</html>
